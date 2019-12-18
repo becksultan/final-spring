@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" href="/stylesheet.css">
+</head>
+<body>
+<header th:insert="fragment/header.html"></header>
+<table class="product-table">
+    <tr><td>Product:</td>
+        <td th:text="${product.name}"></td></tr>
+    <tr><td>Price:</td>
+        <td th:text="${product.price}"></td></tr>
+    <tr><td>Provider:</td>
+        <td th:text="${product.provider.name}"></td></tr>
+</table>
+</body>
+</html>

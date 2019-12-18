@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" href="/stylesheet.css">
+</head>
+<body>
+<header th:insert="fragment/header.html"></header>
+<table class="product-table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Provider</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="product : ${products}">
+            <td><span th:text="${product.name}"></span></td>
+            <td><span th:text="${product.price}"></span></td>
+            <td><span th:text="${product.provider.name}"></span></td>
+            <td><a th:href="@{/product/{id}(id=${product.id})}">Details</a> -
+                <a th:href="@{/product/{id}/toCart(id=${product.id})}">Add</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4"><a th:href="@{/product/add}">Add</a></td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>
