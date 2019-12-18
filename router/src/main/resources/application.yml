@@ -1,0 +1,22 @@
+server:
+  port: 8004
+
+spring:
+  application:
+    name: router-service
+  profiles:
+    active: default
+
+zuul:
+  sensitive-headers: Cookie, Set-Cookie
+
+security:
+  oauth2:
+    resource:
+      jwt:
+        key-value: 123
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka
