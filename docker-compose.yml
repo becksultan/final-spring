@@ -1,0 +1,92 @@
+version: '3'
+services:
+  mysql:
+    container_name: mysql
+    image: mysql
+    environment:
+      - MYSQL_DATABASE=spring
+      - MYSQL_USER=spring
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - "3305:3305"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
+  rabbit:
+    container_name: rabbit
+    image: rabbitmq:management
+    environment:
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  server:
+    container_name: server
+    ports:
+      - "8761:8761"
+    build:
+      dockerfile: /home/beck/IdeaProjects/final-spring/server/Dockerfile
+      context: /home/beck/IdeaProjects/final-spring/server
+
+  router:
+    container_name: router
+    ports:
+    - "8004:8004"
+    build:
+      dockerfile: /home/beck/IdeaProjects/final-spring/router
+      context: /home/beck/IdeaProjects/final-spring/router
+    depends_on:
+      - server
+      - auth
+
+  product:
+    container_name: product
+    ports:
+    - "8002:8002"
+    build:
+      dockerfile: /home/beck/IdeaProjects/final-spring/product
+      context: /home/beck/IdeaProjects/final-spring/product
+    depends_on:
+      - mysql
+      - server
+
+  auth:
+    container_name: auth
+    ports:
+    - "8005:8005"
+    build:
+      dockerfile: /home/beck/IdeaProjects/final-spring/auth/Dockerfile
+      context: /home/beck/IdeaProjects/final-spring/auth
+    depends_on:
+      - mysql
+      - server
+
+  cart:
+    container_name: cart
+    ports:
+    - "8003:8003"
+    build:
+      dockerfile: /home/beck/IdeaProjects/final-spring/cart/Dockerfile
+      context: /home/beck/IdeaProjects/final-spring/cart
+    depends_on:
+      - mysql
+      - server
+
+  front:
+    container_name: front
+    ports:
+      - "8001:8001"
+    build:
+      dockerfile: /home/beck/IdeaProjects/final-spring/front/Dockerfile
+      context: /home/beck/IdeaProjects/final-spring/front
+    depends_on:
+      - server
+
+networks:
+  default:
+    external:
+      name: final

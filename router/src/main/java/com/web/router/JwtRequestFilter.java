@@ -34,7 +34,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String token = httpServletRequest.getHeader("Authorization");
         if (token != null) {
             String validity = restTemplate.getForObject(
-                    "http://localhost:8005/validate/" + token,
+                    "http://auth/validate/" + token,
                     String.class
             );
             assert validity != null;

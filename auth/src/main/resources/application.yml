@@ -4,7 +4,7 @@ spring:
   application:
     name: auth-service
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/spring
+    url: jdbc:mysql://mysql/spring
     username: spring
     password: password
     initialization-mode: embedded
@@ -19,7 +19,7 @@ server:
 eureka:
   client:
     service-url:
-      default-zone: http://localhost:8761/eureka
+      default-zone: http://server/eureka
 
 jwt:
   secret: secret
